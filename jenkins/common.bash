@@ -30,8 +30,7 @@ function init {
 
 function clean {
     echo Cleaning
-    git clean -fxd
-    rm -rf parts # created by snapcraft, contains git repo so not cleaned by git above
+    rm -rf parts # created by snapcraft, contains git repo so not cleaned by git clean
     echo
 }
 
