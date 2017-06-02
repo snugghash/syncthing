@@ -40,6 +40,7 @@ var (
 	goVersion float64
 	race      bool
 	debug     = os.Getenv("BUILDDEBUG") != ""
+	pkgdir    = os.Getenv("GOPKGDIR")
 )
 
 type target struct {
@@ -415,6 +416,9 @@ func install(target target, tags []string) {
 	if race {
 		args = append(args, "-race")
 	}
+	if pkgdir != "" {
+		args = append(args, "-pkgdir", pkgdir)
+	}
 	args = append(args, target.buildPkg)
 
 	os.Setenv("GOOS", goos)
@@ -434,6 +438,9 @@ func build(target target, tags []string) {
 	}
 	if race {
 		args = append(args, "-race")
+	}
+	if pkgdir != "" {
+		args = append(args, "-pkgdir", pkgdir)
 	}
 	args = append(args, target.buildPkg)
 

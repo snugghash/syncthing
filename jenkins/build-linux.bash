@@ -63,6 +63,7 @@ if [[ -d /usr/local/oldgo ]]; then
 	echo Building with minimum supported Go version
 	export GOROOT=/usr/local/oldgo
 	export PATH="$GOROOT/bin:$PATH"
+	export GOPKGDIR="$GOPATH/pkg-old"
 	go version
 	echo
 
