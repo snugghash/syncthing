@@ -227,10 +227,16 @@ func (t *kcpListener) stunRenewal(listener net.PacketConn) {
 
 			for {
 				changed := false
+
+				// This lock has to be here because we are modifying uri, whose
+				// pointer is most likely already stored in t.address, so as we
+				// copy t.uri, we modify uri, hence modify t.address which can be
+				// accessed via WANAddresses().
+				t.mut.Lock()
+
 				uri = *t.uri
 				uri.Host = extAddr.TransportAddr()
 
-				t.mut.Lock()
 				if t.address == nil || t.address.String() != uri.String() {
 					l.Infof("%s resolved external address %s (via %s)", t.uri, uri.String(), addr)
 					t.address = &uri
